@@ -22,6 +22,6 @@ GREETING: STUDENT_NAME을 참조한 인삿말
 - Pod 생성: kubectl apply -f <yaml 파일 경로>
 - Pod 실행 및 IP 확인: kubectl get pod -o wid # -o 는 output의 출력 형식에 대한 옵션이다. wide는 상세 정보 표현. 
 - Pod는 종료: kubectl deletes pod --all or kubectl delete pod <pod name>
-- 컨테이너 IP 확인: kubectl exec <pod name> [-c <container name>] --ifconfig eth0
+- 컨테이너 IP 확인: kubectl exec <pod name> [-c <container name>] -- ifconfig eth0
 - 컨테이너 환경변수 확인 kubectl exec <pod name> --env
 - 포트 포워딩 kubectl port-forward <pod name> <host port> <container port>

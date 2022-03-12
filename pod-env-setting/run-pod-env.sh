@@ -18,6 +18,7 @@ kubectl exec hello-app -- netstat -an
 # 로컬 포트 포워딩  (8080 -> 8080)
 kubectl port-forward hello-app 8080:8080
 
+# 위의 명령어가 실행되고 있을 때
 # HTTP Server 응답 확인  (웹브라우저 or curl)
 curl -v localhost:8080
 
