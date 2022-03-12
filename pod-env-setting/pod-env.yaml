@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-app
+spec:
+  containers:
+  - name: hello-app
+    image: yoonjeong/hello-app:1.0
+    ports:
+      - containerPort: 8080
+    env:
+    - name: POD_NAME
+      valueFrom: 
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    - name: NAMESPACE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: NODE_NAME # node name은 POD이 생성된 이후 받을 수 있느 값이라서 POD이 생성된 정보로부터 값을 가져와야 함. 
+      valueFrom: # 쿠버네티스 오브젝트로부터 환경변수 값을 얻겠다.
+        fieldRef: #  Pod.spec.status의 field를 환경변수 값을 참조하겠다. 
+          fieldPath: spec.nodeName # 참조할 field의 경로 선택. 
+    - name: NODE_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.hostIP
+    - name: STUDENT_NAME
+      value:  'Gracechung'
+    - name: GREETING
+      value: '쿠버네티스 입문 강의에 오신 것을 환영합니다. $(STUDENT_NAME)'
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
