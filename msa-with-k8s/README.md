@@ -63,9 +63,59 @@
 11. MSA 트러블 슈팅 방법
 12. MSA 활용 미니 프로젝트 수행하기
 
-## 1. Microservic 개발 방법
+## 1. Microservice 개발 방법
 
 1. [실습] MSA를 위한 Microservice 개발 소개
 2. [실습] Dependency 설정 및 패키지 및 클래스 지정 방법
+    1. Dependency 설정   
+        spring boot 의 build는 gradle을 통해 이루어지고 build 설정은 build.gradle을 통해 할 수 있다.    
+        ```
+       dependencies {
+        // 우리가 사용하려고 하는 패키지
+       }
+       ```
 3. [실습] Aspect 및 Listener 명시 및 Rest Template 및 Controller
 4. [실습] Application 설정 및 Actutator 적용 및 Jar 생성 옵션 설정 방법
+
+
+```
+(base) grace@jeonghyeonjeong-ui-MacBookPro microservice % spring init --boot-version=2.6.6 --build=gradle --java-version=11 \
+--packaging=jar --name=fastcampus-microservice \ 
+> --package-name=co.fastcampus.microservices \
+> --groupId=co.fastcampus.microservices \
+> --dependencies=actuator --version=1.0.0-SNAPSHOT fastcampus-microservice
+Using service at https://start.spring.io
+Project extracted to '/Users/grace/Study/kubernetes-practice/msa-with-k8s/microservice/fastcampus-microservice'
+(base) grace@jeonghyeonjeong-ui-MacBookPro microservice % ls
+fastcampus-microservice
+(base) grace@jeonghyeonjeong-ui-MacBookPro microservice % cd fastcampus-microservice 
+(base) grace@jeonghyeonjeong-ui-MacBookPro fastcampus-microservice % tree
+.
+├── HELP.md
+├── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── settings.gradle
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── co
+    │   │       └── fastcampus
+    │   │           └── microservices
+    │   │               └── FastcampusMicroserviceApplication.java
+    │   └── resources
+    │       └── application.properties
+    └── test
+        └── java
+            └── co
+                └── fastcampus
+                    └── microservices
+                        └── FastcampusMicroserviceApplicationTests.java
+
+14 directories, 10 files
+```
+
