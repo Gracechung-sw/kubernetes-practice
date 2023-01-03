@@ -15,3 +15,5 @@
 2. Pod Template을 변경한 후 ReplicaSet을 변경한다
 3. Pod 제거 후 변화를 관찰한다
 이를 통해 Replicaset에 선언한 replicas 값이 변경되었을 경우에만 Pod을 새로 생성하지, 그 외 Template가 변경되면 기존 template로 생성된 Pod에는 영향을 주지 않는 것을 확인 할 수 있다. 
+
+## 실습 내용4. ReplicaSet으로 Pod 레플리카수 조정하기
