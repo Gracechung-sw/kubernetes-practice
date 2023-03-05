@@ -20,7 +20,10 @@ https://github.com/prometheus-operator/kube-prometheus#compatibility
 git clone https://github.com/prometheus-operator/kube-prometheus.git -b release-0.10
 ```
 
-# Manifest, CRD
+--
+이미 있다면 바로 아래 단계로!
+
+#  Manifest, CRD
 
 ```
 cd kube-prometheus
@@ -35,59 +38,58 @@ kubectl create -f ./manifests/setup/
 kubectl create -f ./manifests/
 ```
 
-# Troubleshooting
-```
-(base) grace@jeonghyeonjeong-ui-MacBookPro kube-prometheus % kubectl get po -n kube-system metrics-server-68bfd5c84d-j8j6n
-E0224 19:22:13.195319   65270 memcache.go:255] couldn't get resource list for metrics.k8s.io/v1beta1: the server is currently unable to handle the request
-E0224 19:22:13.214213   65270 memcache.go:106] couldn't get resource list for metrics.k8s.io/v1beta1: the server is currently unable to handle the request
-E0224 19:22:13.217249   65270 memcache.go:106] couldn't get resource list for metrics.k8s.io/v1beta1: the server is currently unable to handle the request
-E0224 19:22:13.220757   65270 memcache.go:106] couldn't get resource list for metrics.k8s.io/v1beta1: the server is currently unable to handle the request
-NAME                              READY   STATUS    RESTARTS   AGE
-metrics-server-68bfd5c84d-j8j6n   0/1     Running   0          39h
-```
-설치된 Deployment / metrics-server 에서 아래와 같이 --kubelet-insecure-tls 라는 커맨드를 추가해주자.
-
-ubuntu@ip-10-0-0-246:~$ kubectl edit deploy -n kube-system metrics-server 
-
-    spec:
-      containers:
-      - args:
-        - --cert-dir=/tmp
-        - --secure-port=443
-        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-        - --kubelet-use-node-status-port
-        - --metric-resolution=15s
-        - --kubelet-insecure-tls   << 추가
-
-```
-(base) grace@jeonghyeonjeong-ui-MacBookPro kube-prometheus % kubectl get po -n kube-system metrics-server-6c86dbcddc-dfnnf 
-NAME                              READY   STATUS    RESTARTS   AGE
-metrics-server-6c86dbcddc-dfnnf   1/1     Running   0          59s
-```
 
 # 서비스 연결
 
 설치된 pod 확인
-```
+```bash
 kubectl get pods -n monitoring
+
+# output
+(base) grace@jeonghyeonjeong-ui-MacBookPro kube-prometheus % kubectl get pods -n monitoring
+NAME                                   READY   STATUS              RESTARTS   AGE
+blackbox-exporter-7bcbc4f86c-8crgv     0/3     ContainerCreating   0          5s
+grafana-5d4999d5c7-r849j               0/1     ContainerCreating   0          5s
+kube-state-metrics-948c54447-gmzm6     0/3     Pending             0          4s
+node-exporter-p4vvx                    0/2     Pending             0          4s
+prometheus-adapter-7857494459-d7bpk    0/1     Pending             0          4s
+prometheus-adapter-7857494459-m222b    0/1     Pending             0          4s
+prometheus-operator-74dbf5644d-pld2w   0/2     Pending             0          4s
+
+# wait for sec...
+(base) grace@jeonghyeonjeong-ui-MacBookPro kube-prometheus % kubectl get pods -n monitoring
+NAME                                   READY   STATUS    RESTARTS   AGE
+alertmanager-main-0                    2/2     Running   0          89s
+alertmanager-main-1                    2/2     Running   0          89s
+alertmanager-main-2                    2/2     Running   0          89s
+blackbox-exporter-7bcbc4f86c-8crgv     3/3     Running   0          2m3s
+grafana-5d4999d5c7-r849j               1/1     Running   0          2m3s
+kube-state-metrics-948c54447-gmzm6     3/3     Running   0          2m2s
+node-exporter-p4vvx                    2/2     Running   0          2m2s
+prometheus-adapter-7857494459-d7bpk    1/1     Running   0          2m2s
+prometheus-adapter-7857494459-m222b    1/1     Running   0          2m2s
+prometheus-k8s-0                       1/2     Running   0          88s
+prometheus-k8s-1                       1/2     Running   0          88s
+prometheus-operator-74dbf5644d-pld2w   2/2     Running   0          2m2s
 ```
 
 설치된 service들 확인
-```
+```bash
 kubectl get svc -n monitoring
-```
 
-NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
-alertmanager-main       ClusterIP   10.102.31.81    <none>        9093/TCP,8080/TCP            2m12s
-alertmanager-operated   ClusterIP   None            <none>        9093/TCP,9094/TCP,9094/UDP   88s
-blackbox-exporter       ClusterIP   10.97.52.57     <none>        9115/TCP,19115/TCP           2m12s
-grafana                 ClusterIP   10.97.216.106   <none>        3000/TCP                     2m11s
-kube-state-metrics      ClusterIP   None            <none>        8443/TCP,9443/TCP            2m11s
-node-exporter           ClusterIP   None            <none>        9100/TCP                     2m11s
-prometheus-adapter      ClusterIP   10.104.177.30   <none>        443/TCP                      2m10s
-prometheus-k8s          ClusterIP   10.107.53.171   <none>        9090/TCP,8080/TCP            2m10s
-prometheus-operated     ClusterIP   None            <none>        9090/TCP                     87s
-prometheus-operator     ClusterIP   None            <none>        8443/TCP                     2m10s
+# output
+NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
+alertmanager-main       LoadBalancer   10.109.116.194   127.0.0.1     9093:30179/TCP,8080:30761/TCP   2m21s
+alertmanager-operated   ClusterIP      None             <none>        9093/TCP,9094/TCP,9094/UDP      107s
+blackbox-exporter       ClusterIP      10.107.202.163   <none>        9115/TCP,19115/TCP              2m21s
+grafana                 LoadBalancer   10.110.225.41    127.0.0.1     3000:31759/TCP                  2m21s
+kube-state-metrics      ClusterIP      None             <none>        8443/TCP,9443/TCP               2m20s
+node-exporter           ClusterIP      None             <none>        9100/TCP                        2m20s
+prometheus-adapter      ClusterIP      10.107.21.40     <none>        443/TCP                         2m20s
+prometheus-k8s          LoadBalancer   10.109.42.165    127.0.0.1     9090:30291/TCP,8080:31446/TCP   2m20s
+prometheus-operated     ClusterIP      None             <none>        9090/TCP                        106s
+prometheus-operator     ClusterIP      None             <none>        8443/TCP                        2m20s
+```
 
 이 service들은 web UI를 제공하고 있기 때문에 외부에서도 접근 가능해야하는데, 보이는 것 처럼 **EXTERNAL-IP**가 none이다. 
 port forwarding을 사용할 수도 있지만, Load balancer를 사용해서 외부에서 접근 가능하도록 설정할 것임. 

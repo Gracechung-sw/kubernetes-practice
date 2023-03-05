@@ -120,6 +120,15 @@ Prometheus UI(localhost:9090/alert) -> Status -> Rules
 ```bash
 # 지금 default namespace에 어떤 pod가 떠있는지 보자. 
 kubectl get pod
+```
+No resources found in default namespace. 
+php-apache 생성해보기. 
+```bash
+kubectl apply -f https://k8s.io/examples/application/php-apache.yaml
+```
+
+```bash
+kubectl get pod
 # output
 NAME                          READY   STATUS    RESTARTS        AGE
 php-apache-7495ff8f5b-fqkz6   1/1     Running   1 (3d14h ago)   5d
