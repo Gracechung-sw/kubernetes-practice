@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint
 
-from route.elf_test_route import elk_test
+from route.elk_test_route import elk_test
 
 app = Flask(__name__)
 

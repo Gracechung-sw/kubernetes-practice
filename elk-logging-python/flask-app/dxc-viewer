@@ -1,0 +1,20 @@
+
+[INFO|DeepDx Connect|elf_test_route.py:16] 14:57:58 > hello elk-test-logstash~~~~~
+
+[INFO|werkzeug|_internal.py:113] 14:57:58 > 127.0.0.1 - - [02/Apr/2023 14:57:58] "[37mGET / HTTP/1.1[0m" 200 -
+
+[INFO|DeepDx Connect|elf_test_route.py:16] 14:57:58 > hello elk-test-logstash~~~~~
+
+[INFO|werkzeug|_internal.py:113] 14:57:58 > 127.0.0.1 - - [02/Apr/2023 14:57:58] "[37mGET / HTTP/1.1[0m" 200 -
+
+[INFO|DeepDx Connect|elf_test_route.py:16] 14:57:59 > hello elk-test-logstash~~~~~
+
+[INFO|werkzeug|_internal.py:113] 14:57:59 > 127.0.0.1 - - [02/Apr/2023 14:57:59] "[37mGET / HTTP/1.1[0m" 200 -
+
+[INFO|DeepDx Connect|elf_test_route.py:16] 14:57:59 > hello elk-test-logstash~~~~~
+
+[INFO|werkzeug|_internal.py:113] 14:57:59 > 127.0.0.1 - - [02/Apr/2023 14:57:59] "[37mGET / HTTP/1.1[0m" 200 -
+
+[INFO|DeepDx Connect|elf_test_route.py:16] 14:57:59 > hello elk-test-logstash~~~~~
+
+[INFO|werkzeug|_internal.py:113] 14:57:59 > 127.0.0.1 - - [02/Apr/2023 14:57:59] "[37mGET / HTTP/1.1[0m" 200 -
