@@ -1,6 +1,7 @@
 # flask logging using ELK on Docker
 
 ### 1. git clone ELK docker config files.
+(I already have in this repo.)
 ```bash
 git clone https://github.com/deviantony/docker-elk.git
 ```
